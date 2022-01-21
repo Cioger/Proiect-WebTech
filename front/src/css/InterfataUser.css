@@ -1,0 +1,28 @@
+.tabele-user {
+    display: flex;
+    flex-direction: row;
+}
+
+.tabel-user-pr-neasumat {
+    margin-right: 15px;
+    max-width: 100%;
+}
+
+.form-proiect {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    background-color: white;
+    width: 200px;
+    height: 250px;
+}
+
+.titlu-add-project {
+    color: black;
+    font-size: medium;
+    margin-bottom: 0;
+}
+
+.form-proiect input {
+    padding: 10px 5px;
+}

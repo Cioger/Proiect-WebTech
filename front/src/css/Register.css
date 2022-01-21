@@ -1,0 +1,38 @@
+.register-box {
+    width: 320px;
+    padding: 20px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bg-color);
+    box-shadow: 0 15px 25px var(--bg-color);
+    border-radius: 10px;
+}
+
+.register-box h1 {
+    font-size: 30px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    padding: 13px 0;
+    text-align: center;
+}
+
+#select-hide {
+    display: none;
+}
+
+.box {
+    /* margin-left:-66px; */
+    margin-bottom: 45px;
+}
+
+.box select {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 15px;
+    width: 250px;
+    border: none;
+    font-size: medium;
+    outline: none;
+}

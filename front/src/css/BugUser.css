@@ -1,0 +1,12 @@
+#addCommit input {
+    padding: 10px 5px;
+}
+
+.tabeleUserBug {
+    display: flex;
+    flex-direction: row;
+}
+
+.tabel-bug-user-nealoc {
+    margin-right: 15px;
+}

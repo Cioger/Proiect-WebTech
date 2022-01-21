@@ -1,0 +1,9 @@
+.tabele-tester {
+    display: flex;
+    flex-direction: row;
+}
+
+.tabel-tester-pr-neasumat {
+    margin-right: 15px;
+    margin-left: 15px;
+}
