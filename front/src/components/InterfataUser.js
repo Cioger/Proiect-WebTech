@@ -174,6 +174,7 @@ export default class InterfataUser extends Component {
     handleSubmitEdit = (e) => {
         e.preventDefault();
         this.editProject();
+        toast.success("Project Edited!")
     };
 
     handleChangeEdit = (e) => {
