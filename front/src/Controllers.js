@@ -41,6 +41,22 @@ async function postProject(url, item) {
         return e.response.data;
     }
 }
+async function postBug(url, item) {
+    try {
+        let newUrl = !item ? url : url + "/add/";
+        return (await axios.post(
+            newUrl,
+            item,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        )).data;
+    } catch (e) {
+        return e.response.data;
+    }
+}
 
 async function getProjectsUser(url, id) {
     try {
@@ -130,4 +146,4 @@ async function getBugCommit(url, description) {
     }
 }
 
-export { get, post, getName, postProject, getProjectsUser, getProjects, getProjectByName, getTeamNameById, updateProject, getBugsProject, getBugs, getBugCommit };
+export { get, post, getName,postBug, postProject, getProjectsUser, getProjects, getProjectByName, getTeamNameById, updateProject, getBugsProject, getBugs, getBugCommit };

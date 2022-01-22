@@ -62,6 +62,6 @@
 
 :root {
   --primary-color: white;
-  --secondary-color: rgb(19, 116, 212);
-  --bg-color: rgba(0, 0, 0, 0.8);
+  --secondary-color: rgb(255, 182, 193);
+  --bg-color: rgba(72, 61, 139, 0.8);
 }

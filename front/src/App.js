@@ -6,6 +6,9 @@ import Tester from './components/InterfataTester';
 import User from './components/InterfataUser';
 import BugTester from './components/BugTester';
 import BugUser from './components/BugUser';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 function App() {
   return (

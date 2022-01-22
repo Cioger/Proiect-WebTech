@@ -19,9 +19,6 @@ const controller = {
             errors.push({ msg: 'Necesita o valoare intre 1 si 5 a prioritatii' });
         }
 
-        if (description.length < 6) {
-            errors.push({ msg: 'Lasati o descriere a problemei' });
-        }
 
         if (errors.length > 0) {
             res.send(errors);

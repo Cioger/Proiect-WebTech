@@ -3,7 +3,9 @@ import "../css/Login.css";
 import { post, get } from '../Controllers';
 import { userRoute } from '../Routes';
 import { setId } from '../Utils'
-
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 export default class Login extends Component {
 
@@ -30,14 +32,18 @@ export default class Login extends Component {
                     pathname: "/tester",
                     state: { pers: nextPage },
                   });
+                  toast.success("Logged in as tester!")
             } else {
                 this.props.history.push({
                     pathname: "/user",
                     state: { pers: nextPage },
                   });
+                  toast.success("Logged in as Project Member!")
             }
+            
         } else {
-            alert(res.msg);
+        
+            toast.error(res.msg)
         }
     };
 
@@ -51,6 +57,7 @@ export default class Login extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.login()
+       
     };
 
     render() {

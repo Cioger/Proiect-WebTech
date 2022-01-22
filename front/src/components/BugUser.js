@@ -117,7 +117,7 @@ export default class BugUser extends Component {
     render() {
         return (
             <div>
-                <h1>Bug-uri user</h1>
+                <h1>Project Member Bug Dashboard</h1>
 
                 <div className="tabeleUserBug">
                     <div className="tabel-bug-user-nealoc">

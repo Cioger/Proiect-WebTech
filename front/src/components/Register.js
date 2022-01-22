@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import '../css/Register.css';
 import { post } from '../Controllers';
 import { userRoute } from '../Routes';
-
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 export default class Register extends Component {
 
     constructor(props) {
@@ -25,7 +27,7 @@ export default class Register extends Component {
             if (user.msg === undefined) {
                 user.msg = "User-ul a fost creat";
             } else {
-                alert(user.msg);
+               toast.success(user.msg)
                 if (user.msg === "User-ul a fost creat") {
                     this.props.history.push('/');
                 }

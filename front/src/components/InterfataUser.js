@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Input } from 'antd';
+import { Button, Input } from 'antd';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,11 +7,15 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { UserAddOutlined, SendOutlined, PlusCircleOutlined, EditOutlined } from '@ant-design/icons';
+import { UserAddOutlined, PlusCircleOutlined, EditOutlined,BugOutlined,LogoutOutlined } from '@ant-design/icons';
 import "../css/InterfataUser.css"
 import Modal from './Modal.js';
 import { get, postProject, getProjectsUser, getProjects, getProjectByName, getTeamNameById, updateProject } from '../Controllers';
 import { userRoute, projectRoute, teamRoute } from '../Routes';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure()
 
 export default class InterfataUser extends Component {
 
@@ -48,37 +52,33 @@ export default class InterfataUser extends Component {
 
     async componentDidMount() {
         try {
-            //preluare id din login
+            
             let prs = await get(userRoute, this.props.location.state.pers.id);
             this.setState({
                 pers: prs,
             });
-            //end 
-
-            //get proiecte user
+            
             let prUser = await getProjectsUser(projectRoute, this.props.location.state.pers.id);
             this.setState({
                 projectsUser: prUser,
             })
-            //end
-
-            //get proiecte
+            
             let prjs = await getProjects(projectRoute);
             this.setState({
                 projects: prjs,
             })
-            //end
+           
         }
         catch (err) {
             console.log(err)
         }
 
-        //apelare filtru
+       
         this.filterProjects();
     }
 
 
-    //post proiect in BD 
+    
     createProject = async () => {
         try {
             await postProject(projectRoute, this.state.project);
@@ -100,6 +100,7 @@ export default class InterfataUser extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.createProject();
+        toast.success("Project Created!");
     };
 
     handleChange = (e) => {
@@ -108,9 +109,7 @@ export default class InterfataUser extends Component {
         newProject[e.target.name] = e.target.value;
         this.setState({ project: newProject });
     };
-    //end
-
-    //filtru proiecte
+    
     filterProjects() {
         let pr = [];
         let ok = true;
@@ -131,9 +130,7 @@ export default class InterfataUser extends Component {
             nonProjects: pr,
         })
     }
-    //end
-
-    //edit
+    
     async nameprj(parm) {
         await this.setState({
             nameProject: parm,
@@ -185,9 +182,7 @@ export default class InterfataUser extends Component {
         newProject[e.target.name] = e.target.value;
         this.setState({ infoProject: newProject });
     };
-    //end  
-
-    //bugpage
+    
     async goToBugs(parm) {
         await this.setState({
             nameToBug: parm,
@@ -197,9 +192,7 @@ export default class InterfataUser extends Component {
             state: { bug: this.state.nameToBug },
         });
     }
-    //end
-
-    //modal
+   
     showModal = () => {
         this.setState({ show: true });
     };
@@ -207,12 +200,20 @@ export default class InterfataUser extends Component {
     hideModal = () => {
         this.setState({ show: false });
     };
-    //end
+    async LogOut(parm) {
+        
+        this.props.history.push({
+            pathname: "/",
+            
+        });
+        toast.info("Logged out!");
+    }
 
     render() {
         return (
             <div>
-                <h1>Users</h1>
+                 
+                <h1>Project Member Dashboard</h1>
                 <div className="tabele-user">
                     <div className="form-proiect">
                         <div className="titlu-add-project"><p>Add project</p></div>
@@ -226,9 +227,9 @@ export default class InterfataUser extends Component {
                             <Table className={"useStyles"} aria-label="simple table">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell>Name</TableCell>
-                                        <TableCell align="right">Edit</TableCell>
-                                        <TableCell align="right">Add</TableCell>
+                                        <TableCell style={{fontWeight:'bold'}}>Project Name</TableCell>
+                                        <TableCell style={{fontWeight:'bold'}} align="right">Update Project</TableCell>
+                                        <TableCell style={{fontWeight:'bold'}} align="right">Assign Bug <BugOutlined style={{ fontSize: '15px', outline: 'none' }} /></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -245,40 +246,17 @@ export default class InterfataUser extends Component {
                             </Table>
                         </TableContainer>
                     </div>
-                    <div className="tabel-user-pr-asumate">
-                        <TableContainer component={Paper}>
-                            <Table className={"useStyles"} aria-label="simple table">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Name</TableCell>
-                                        <TableCell align="right">Edit</TableCell>
-                                        <TableCell align="right">Go</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {this.state.projectsUser.map((item) => {
-                                        return (
-                                            <TableRow key={item.projectName}>
-                                                <TableCell component="th" scope="row">
-                                                    {item.projectName}
-                                                </TableCell>
-                                                <TableCell align="right"><EditOutlined style={{ fontSize: '20px', outline: 'none' }} onClick={() => { this.showModal(); this.nameprj(item.projectName) }} /></TableCell>
-                                                <TableCell align="right"><SendOutlined style={{ fontSize: '20px', outline: 'none' }} onClick={() => { this.goToBugs(item.projectName)}} /></TableCell>
-                                            </TableRow>)
-                                    })}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    </div>
                 </div>
                 <Modal show={this.state.show} handleClose={this.hideModal}>
-                    <p>Edit project</p>
+                    <p>Update project</p>
                     <div><Input placeholder="Project name" name="projectName" value={this.state.infoProject.projectName} onChange={this.handleChangeEdit} /></div>
                     <div><Input placeholder="Repository" name="repository" value={this.state.infoProject.repository} onChange={this.handleChangeEdit} /></div>
                     <div><Input placeholder="Team name" name="teamName" value={this.state.team.name} onChange={this.handleChangeEdit} /></div>
                     <div><PlusCircleOutlined style={{ fontSize: '20px', outline: 'none' }} onClick={this.handleSubmitEdit} /></div>
                 </Modal>
+                <Button class="btnLogout" variant="primary"><LogoutOutlined onClick={()=>{this.LogOut()}}/></Button>
             </div >
+            
         )
     }
 }
